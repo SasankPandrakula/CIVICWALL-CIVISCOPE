@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funding - CIVICWALL-CIVISCOPE</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="navbar">
+        <div class="nav-container">
+            <div class="nav-header">
+                <h1 class="nav-title">CIVICWALL-CIVISCOPE</h1>
+            </div>
+            
+            <div class="nav-content">
+                <div class="nav-links">
+                    <a href="home.html"><button class="nav-btn">Home</button></a>
+                    <a href="about.html"><button class="nav-btn">About</button></a>
+                    <a href="schemas.html"><button class="nav-btn">Schemas</button></a>
+                </div>
+                <div class="nav-actions">
+                    <div class="search-container">
+                        <i data-lucide="search" class="icon-outline"></i>
+                        <input type="text" id="searchInput" placeholder="Search location, problems..." class="search-input">
+                    </div>
+                    <button class="menu-btn" id="menuBtn"><i data-lucide="menu" class="icon-outline"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="menu-overlay" id="menuOverlay">
+        <div class="menu-content">
+            <div class="menu-header">
+                <h2>Menu</h2>
+               <button class="close-btn" id="closeMenuBtn"><i data-lucide="x" class="icon-outline"></i></button>
+            </div>
+            <div class="menu-items">
+                <a href="home.html"><button class="menu-item"><i data-lucide="home" class="icon-outline"></i> Home</button></a>
+                <a href="about.html"><button class="menu-item"><i data-lucide="info" class="icon-outline"></i> About</button></a>
+                <a href="schemas.html"><button class="menu-item"><i data-lucide="file-text" class="icon-outline"></i> Schemas</button></a>
+                <a href="ongoing.html"><button class="menu-item"><i data-lucide="refresh-ccw" class="icon-outline"></i> On-going</button></a>
+                <a href="upcoming.html"><button class="menu-item"><i data-lucide="calendar" class="icon-outline"></i> Up-coming</button></a>
+                <a href="id.html"><button class="menu-item"><i data-lucide="badge-check" class="icon-outline"></i> ID Importance</button></a>
+                <a href="funding.html"><button class="menu-item"><i data-lucide="wallet" class="icon-outline"></i> Funding</button></a>
+                <button class="menu-item logout" id="logoutBtn"><i data-lucide="log-out" class="icon-outline"></i> Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">Civic Funding Portal</h1>
+            <p class="page-subtitle">Support government initiatives and contribute to Andhra Pradesh's development</p>
+        </div>
+
+        <div class="funding-container">
+            <div class="donation-section">
+                <div class="donation-card">
+                    <h2>❤️ Make a Donation</h2>
+                    <form id="donationForm" class="donation-form">
+                        <div class="form-group">
+                            <label for="donorName">Your Name *</label>
+                            <input type="text" id="donorName" required placeholder="Enter your full name">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="donationCause">Select Cause *</label>
+                            <select id="donationCause" required>
+                                <option value="">Choose a cause to support</option>
+                                <option value="Education Infrastructure">Education Infrastructure</option>
+                                <option value="Healthcare Facilities">Healthcare Facilities</option>
+                                <option value="Clean Water Projects">Clean Water Projects</option>
+                                <option value="Digital Governance">Digital Governance</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="donationAmount">Donation Amount (₹) *</label>
+                            <input type="number" id="donationAmount" required min="10" placeholder="Enter amount (minimum ₹10)">
+                            <div class="quick-amounts">
+                                <button type="button" class="amount-btn" data-amount="100">₹100</button>
+                                <button type="button" class="amount-btn" data-amount="500">₹500</button>
+                                <button type="button" class="amount-btn" data-amount="1000">₹1000</button>
+                                <button type="button" class="amount-btn" data-amount="5000">₹5000</button>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Payment Method *</label>
+                            <div class="payment-methods">
+                                <button type="button" class="payment-btn" data-method="phonepe">📱 PhonePe</button>
+                                <button type="button" class="payment-btn" data-method="googlepay">💳 Google Pay</button>
+                                <button type="button" class="payment-btn" data-method="paytm">💰 Paytm</button>
+                                <button type="button" class="payment-btn" data-method="upi">🏦 UPI</button>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn-primary">Donate Now</button>
+                        <p class="security-note">🔒 Your donation is secure and will be used for the selected cause. Tax benefits available under Section 80G.</p>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="stats-section">
+                <div class="stat-card">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-number">12,567</div>
+                    <div class="stat-label">Total Donors</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">₹</div>
+                    <div class="stat-number">₹2.45 Cr</div>
+                    <div class="stat-label">Total Raised</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="causes-section">
+            <h2>Current Funding Causes</h2>
+            <div id="causesContainer" class="causes-grid">
+                <!-- Causes will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check if user is logged in
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'login.html';
+        }
+
+        const fundingCauses = [
+            {
+                title: "Education Infrastructure",
+                description: "Support building of schools, libraries, and digital classrooms across rural Andhra Pradesh",
+                raised: "₹45,67,890",
+                target: "₹1,00,00,000",
+                percentage: 46,
+                icon: "🏫"
+            },
+            {
+                title: "Healthcare Facilities",
+                description: "Fund medical equipment, ambulances, and healthcare centers in underserved areas",
+                raised: "₹78,23,456",
+                target: "₹2,00,00,000",
+                percentage: 39,
+                icon: "🏥"
+            },
+            {
+                title: "Clean Water Projects",
+                description: "Provide clean drinking water through bore wells and water purification systems",
+                raised: "₹23,45,678",
+                target: "₹75,00,000",
+                percentage: 31,
+                icon: "💧"
+            },
+            {
+                title: "Digital Governance",
+                description: "Enhance digital services and e-governance platforms for better citizen services",
+                raised: "₹56,78,234",
+                target: "₹1,50,00,000",
+                percentage: 38,
+                icon: "💻"
+            }
+        ];
+
+        let selectedPaymentMethod = '';
+
+        function displayCauses() {
+            const container = document.getElementById('causesContainer');
+            container.innerHTML = '';
+
+            fundingCauses.forEach(cause => {
+                const causeCard = document.createElement('div');
+                causeCard.className = 'cause-card';
+                causeCard.innerHTML = `
+                    <div class="cause-header">
+                        <div class="cause-icon">${cause.icon}</div>
+                        <h3>${cause.title}</h3>
+                    </div>
+                    <p class="cause-description">${cause.description}</p>
+                    <div class="progress-info">
+                        <div class="progress-text">
+                            <span>Raised: ${cause.raised}</span>
+                            <span>Target: ${cause.target}</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${cause.percentage}%"></div>
+                        </div>
+                        <div class="progress-percent">${cause.percentage}% Completed</div>
+                    </div>
+                    <button class="support-btn" onclick="selectCause('${cause.title}')">Support This Cause</button>
+                `;
+                container.appendChild(causeCard);
+            });
+        }
+
+        function selectCause(causeName) {
+            document.getElementById('donationCause').value = causeName;
+            document.getElementById('donationCause').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Quick amount buttons
+        document.querySelectorAll('.amount-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.getElementById('donationAmount').value = btn.dataset.amount;
+            });
+        });
+
+        // Payment method selection
+        document.querySelectorAll('.payment-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.payment-btn').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                selectedPaymentMethod = btn.dataset.method;
+            });
+        });
+
+        // Donation form submission
+        document.getElementById('donationForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const donorName = document.getElementById('donorName').value;
+            const donationCause = document.getElementById('donationCause').value;
+            const donationAmount = document.getElementById('donationAmount').value;
+            
+            if (!selectedPaymentMethod) {
+                alert('Please select a payment method');
+                return;
+            }
+            
+            if (parseInt(donationAmount) < 10) {
+                alert('Minimum donation amount is ₹10');
+                return;
+            }
+            
+            alert(`Thank you ${donorName}! Your donation of ₹${donationAmount} for ${donationCause} is being processed via ${selectedPaymentMethod}.`);
+            
+            // Reset form
+            document.getElementById('donationForm').reset();
+            document.querySelectorAll('.payment-btn').forEach(b => b.classList.remove('selected'));
+            selectedPaymentMethod = '';
+        });
+
+        // Menu functionality
+        const menuBtn = document.getElementById('menuBtn');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
+
+        menuBtn.addEventListener('click', () => {
+            menuOverlay.style.display = 'flex';
+        });
+
+        closeMenuBtn.addEventListener('click', () => {
+            menuOverlay.style.display = 'none';
+        });
+
+        menuOverlay.addEventListener('click', (e) => {
+            if (e.target === menuOverlay) {
+                menuOverlay.style.display = 'none';
+            }
+        });
+
+        logoutBtn.addEventListener('click', () => {
+            localStorage.removeItem('isLoggedIn');
+            alert('Logged out successfully');
+            window.location.href = 'login.html';
+        });
+
+        // Load causes on page load
+        displayCauses();
+    </script>
+    <script>lucide.createIcons()</script>
+</body>
+</html>

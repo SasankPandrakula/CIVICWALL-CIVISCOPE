@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Schemas - CIVICWALL-CIVISCOPE</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <div class="navbar">
+    <div class="nav-container">
+      <div class="nav-header">
+        <h1 class="nav-title">CIVICWALL-CIVISCOPE</h1>
+      </div>
+      <div class="nav-content">
+        <div class="nav-links">
+          <a href="home.html"><button class="nav-btn">Home</button></a>
+          <a href="about.html"><button class="nav-btn">About</button></a>
+          <a href="schemas.html"><button class="nav-btn active">Schemas</button></a>
+        </div>
+        <div class="nav-actions">
+          <div class="search-container">
+            <i data-lucide="search" class="icon-outline"></i>
+            <input type="text" id="searchInput" placeholder="Search location, problems..." class="search-input">
+          </div>
+          <button class="menu-btn" id="menuBtn"><i data-lucide="menu" class="icon-outline"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="menu-overlay" id="menuOverlay">
+    <div class="menu-content">
+      <div class="menu-header">
+        <h2>Menu</h2>
+        <button class="close-btn" id="closeMenuBtn"><i data-lucide="x" class="icon-outline"></i></button>
+      </div>
+      <div class="menu-items">
+        <a href="home.html"><button class="menu-item"><i data-lucide="home" class="icon-outline"></i> Home</button></a>
+        <a href="about.html"><button class="menu-item"><i data-lucide="info" class="icon-outline"></i> About</button></a>
+        <a href="schemas.html"><button class="menu-item"><i data-lucide="file-text" class="icon-outline"></i> Schemas</button></a>
+        <a href="ongoing.html"><button class="menu-item"><i data-lucide="refresh-ccw" class="icon-outline"></i> On-going</button></a>
+        <a href="upcoming.html"><button class="menu-item"><i data-lucide="calendar" class="icon-outline"></i> Up-coming</button></a>
+        <a href="id.html"><button class="menu-item"><i data-lucide="badge-check" class="icon-outline"></i> ID Importance</button></a>
+        <a href="funding.html"><button class="menu-item"><i data-lucide="wallet" class="icon-outline"></i> Funding</button></a>
+        <button class="menu-item logout" id="logoutBtn"><i data-lucide="log-out" class="icon-outline"></i> Logout</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <div class="page-header">
+      <h1 class="page-title">Government Schemes (పథకాలు)</h1>
+      <p class="page-subtitle">Comprehensive information about all government welfare schemes in Andhra Pradesh</p>
+    </div>
+
+    <div id="schemesContainer" class="schemes-grid">
+      <!-- Schemes will be loaded here -->
+    </div>
+  </div>
+
+  <script>
+    // Check if user is logged in
+    if (localStorage.getItem('isLoggedIn') !== 'true') {
+      window.location.href = 'login.html';
+    }
+
+  const schemes = [
+  {
+    name: "Amma Vodi",
+    category: "Education",
+    description: "Financial assistance of ₹15,000 per year to mothers for sending their children to school.",
+    eligibility: "Mothers with children studying in government/aided schools",
+    benefits: "₹15,000 annual assistance"
+  },
+  {
+    name: "Anna Canteens",
+    category: "Food Security",
+    description: "Subsidized meals at ₹5 for breakfast and ₹15 for lunch/dinner",
+    eligibility: "All citizens, especially low-income families",
+    benefits: "Nutritious meals at highly subsidized rates"
+  },
+  {
+    name: "Arogyasri",
+    category: "Healthcare",
+    description: "Free healthcare scheme covering surgeries and treatments up to ₹5 lakh per family",
+    eligibility: "BPL families and white ration card holders",
+    benefits: "Free medical treatment up to ₹5 lakh"
+  },
+  {
+    name: "Bharosa Pension",
+    category: "Social Security",
+    description: "Monthly pension for elderly, widows, disabled, and other vulnerable groups",
+    eligibility: "Age 60+ (men), 55+ (women), widows, disabled persons",
+    benefits: "₹2,250-3,000 monthly pension"
+  },
+  {
+    name: "Super Six Scheme",
+    category: "Youth Empowerment",
+    description: "Six major benefits for youth including jobs, skill training, and startup support.",
+    eligibility: "Youth aged 18-35 years",
+    benefits: "Free skill training, startup seed fund, government job coaching"
+  },
+  {
+    name: "Thalliki Vandhanam",
+    category: "Women & Education",
+    description: "Financial assistance to mothers when their child joins college or university.",
+    eligibility: "Mothers of students enrolled in higher education",
+    benefits: "₹15,000–₹20,000 one-time support"
+  },
+  {
+    name: "Adabidda Nidhi",
+    category: "Women Welfare",
+    description: "Monthly financial support to women for household empowerment and independence.",
+    eligibility: "Women aged 18–59 years (non-government employees)",
+    benefits: "₹1,500 per month direct transfer"
+  },
+  {
+    name: "Annadatha Rakshana",
+    category: "Agriculture",
+    description: "Minimum Support Price (MSP) guarantee and crop insurance for farmers.",
+    eligibility: "All registered farmers in AP",
+    benefits: "Fair crop prices, insurance, interest-free loans"
+  },
+  {
+    name: "Mega DSC Recruitment",
+    category: "Education & Jobs",
+    description: "Massive teacher recruitment drive to fill government school teacher vacancies.",
+    eligibility: "Qualified B.Ed/D.Ed candidates",
+    benefits: "Transparent recruitment, job security"
+  },
+  {
+    name: "JanaJeevana Suraksha",
+    category: "Health & Insurance",
+    description: "Universal health insurance up to ₹15 lakh per family per year.",
+    eligibility: "All families (with prioritization for BPL and middle class)",
+    benefits: "₹15 lakh coverage, cashless treatment"
+  }
+];
+
+
+    function displaySchemes(schemesToShow) {
+      const container = document.getElementById('schemesContainer');
+      container.innerHTML = '';
+
+      schemesToShow.forEach(scheme => {
+        const schemeCard = document.createElement('div');
+        schemeCard.className = 'scheme-card';
+        schemeCard.innerHTML = `
+          <div class="scheme-header">
+            <h3>${scheme.name}</h3>
+            <span class="scheme-category">${scheme.category}</span>
+          </div>
+          <p class="scheme-description">${scheme.description}</p>
+          <div class="scheme-details">
+            <div class="scheme-detail">
+              <strong>Eligibility:</strong>
+              <p>${scheme.eligibility}</p>
+            </div>
+            <div class="scheme-detail">
+              <strong>Benefits:</strong>
+              <p>${scheme.benefits}</p>
+            </div>
+          </div>
+        `;
+        container.appendChild(schemeCard);
+      });
+    }
+
+    // Corrected: Search input ID
+    document.getElementById('searchInput').addEventListener('input', function (e) {
+      const searchTerm = e.target.value.toLowerCase();
+      const filteredSchemes = schemes.filter(scheme =>
+        scheme.name.toLowerCase().includes(searchTerm) ||
+        scheme.category.toLowerCase().includes(searchTerm) ||
+        scheme.description.toLowerCase().includes(searchTerm)
+      );
+      displaySchemes(filteredSchemes);
+    });
+
+    // Menu functionality
+    const menuBtn = document.getElementById('menuBtn');
+    const menuOverlay = document.getElementById('menuOverlay');
+    const closeMenuBtn = document.getElementById('closeMenuBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+
+    menuBtn.addEventListener('click', () => {
+      menuOverlay.style.display = 'flex';
+    });
+
+    closeMenuBtn.addEventListener('click', () => {
+      menuOverlay.style.display = 'none';
+    });
+
+    menuOverlay.addEventListener('click', (e) => {
+      if (e.target === menuOverlay) {
+        menuOverlay.style.display = 'none';
+      }
+    });
+
+    logoutBtn.addEventListener('click', () => {
+      localStorage.removeItem('isLoggedIn');
+      alert('Logged out successfully');
+      window.location.href = 'login.html';
+    });
+
+    // Load schemes initially
+    displaySchemes(schemes);
+  </script>
+
+  <!-- Render Lucide icons after DOM is loaded -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>

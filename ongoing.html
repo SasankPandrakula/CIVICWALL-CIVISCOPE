@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>On-Going Projects - CIVICWALL-CIVISCOPE</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="navbar">
+        <div class="nav-container">
+            <div class="nav-header">
+                <h1 class="nav-title">CIVICWALL-CIVISCOPE</h1>
+            </div>
+            
+            <div class="nav-content">
+                <div class="nav-links">
+                    <a href="home.html"><button class="nav-btn">Home</button></a>
+                    <a href="about.html"><button class="nav-btn">About</button></a>
+                    <a href="schemas.html"><button class="nav-btn">Schemas</button></a>
+                </div>
+               <div class="nav-actions">
+                    <div class="search-container">
+                        <i data-lucide="search" class="icon-outline"></i>
+                        <input type="text" id="searchInput" placeholder="Search location, problems..." class="search-input">
+                    </div>
+                   <button class="menu-btn" id="menuBtn"><i data-lucide="menu" class="icon-outline"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="menu-overlay" id="menuOverlay">
+        <div class="menu-content">
+            <div class="menu-header">
+                <h2>Menu</h2>
+                <button class="close-btn" id="closeMenuBtn"><i data-lucide="x" class="icon-outline"></i></button>
+            </div>
+            <div class="menu-items">
+                <a href="home.html"><button class="menu-item"><i data-lucide="home" class="icon-outline"></i> Home</button></a>
+                <a href="about.html"><button class="menu-item"><i data-lucide="info" class="icon-outline"></i> About</button></a>
+                <a href="schemas.html"><button class="menu-item"><i data-lucide="file-text" class="icon-outline"></i> Schemas</button></a>
+                <a href="ongoing.html"><button class="menu-item"><i data-lucide="refresh-ccw" class="icon-outline"></i> On-going</button></a>
+                <a href="upcoming.html"><button class="menu-item"><i data-lucide="calendar" class="icon-outline"></i> Up-coming</button></a>
+                <a href="id.html"><button class="menu-item"><i data-lucide="badge-check" class="icon-outline"></i> ID Importance</button></a>
+                <a href="funding.html"><button class="menu-item"><i data-lucide="wallet" class="icon-outline"></i> Funding</button></a>
+                <button class="menu-item logout" id="logoutBtn"><i data-lucide="log-out" class="icon-outline"></i> Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">On-Going Projects</h1>
+            <p class="page-subtitle">Major development projects currently under implementation in Andhra Pradesh 2025</p>
+        </div>
+
+        <div id="projectsContainer" class="projects-container">
+            <!-- Projects will be loaded here -->
+        </div>
+    </div>
+
+    <script>
+        // Check if user is logged in
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'login.html';
+        }
+
+        const ongoingProjects = [
+    {
+        name: "Amaravati Capital Development",
+        description: "Development of the new capital city of Andhra Pradesh with world-class infrastructure, government buildings, and residential complexes.",
+        progress: 35,
+        budget: "₹58,000 crores",
+        location: "Amaravati, Guntur District",
+        expectedCompletion: "2026-12-31"
+    },
+    {
+        name: "Polavaram Irrigation Project",
+        description: "Major multipurpose irrigation project to provide irrigation facilities to Krishna, West Godavari, and East Godavari districts.",
+        progress: 78,
+        budget: "₹55,656 crores",
+        location: "West Godavari District",
+        expectedCompletion: "2025-10-31"
+    },
+    {
+        name: "Visakhapatnam Metro Rail Project",
+        description: "Metro rail system connecting major areas of Visakhapatnam city to reduce traffic congestion and improve public transportation.",
+        progress: 18,
+        budget: "₹12,500 crores",
+        location: "Visakhapatnam",
+        expectedCompletion: "2027-03-31"
+    },
+    {
+        name: "Machilipatnam Port Development",
+        description: "Construction of a deep-water port at Machilipatnam to boost maritime trade and industrial growth in the region.",
+        progress: 25,
+        budget: "₹5,200 crores",
+        location: "Krishna District",
+        expectedCompletion: "2026-06-30"
+    },
+    {
+        name: "Bheemili–Anandapuram 6-Lane Highway",
+        description: "Six-laning of the highway from Bheemili to Anandapuram to enhance connectivity to Visakhapatnam and Bhogapuram Airport.",
+        progress: 48,
+        budget: "₹2,000 crores",
+        location: "Visakhapatnam District",
+        expectedCompletion: "2025-09-30"
+    },
+    {
+        name: "Bhogapuram International Airport",
+        description: "Construction of a world-class greenfield international airport with passenger and cargo handling capabilities.",
+        progress: 40,
+        budget: "₹4,592 crores",
+        location: "Vizianagaram District",
+        expectedCompletion: "2026-03-31"
+    },
+    {
+        name: "Y-Smart Cities Program",
+        description: "Urban transformation projects under Smart Cities Mission in cities like Tirupati, Kakinada, and Vijayawada.",
+        progress: 60,
+        budget: "₹7,800 crores (combined)",
+        location: "Multiple Cities",
+        expectedCompletion: "2025-12-31"
+    },
+    {
+        name: "Kurnool Industrial Hub",
+        description: "Development of an industrial hub with MSME clusters, textile units, and logistic parks to boost employment.",
+        progress: 30,
+        budget: "₹3,400 crores",
+        location: "Kurnool District",
+        expectedCompletion: "2026-08-31"
+    },
+    {
+        name: "Annavaram–Rajamundry 4-Lane Expansion",
+        description: "Widening of NH-216A to ease cargo and pilgrimage traffic between the Godavari region and Vizag.",
+        progress: 22,
+        budget: "₹1,750 crores",
+        location: "East Godavari District",
+        expectedCompletion: "2025-11-30"
+    },
+    {
+        name: "Temple Tourism Corridor",
+        description: "Integrated development of temple towns including Srisailam, Simhachalam, and Kanaka Durga temples with better roads and amenities.",
+        progress: 50,
+        budget: "₹1,200 crores",
+        location: "Multiple Pilgrimage Cities",
+        expectedCompletion: "2025-08-15"
+    }
+];
+
+        function displayProjects() {
+            const container = document.getElementById('projectsContainer');
+            container.innerHTML = '';
+
+            ongoingProjects.forEach(project => {
+                const projectCard = document.createElement('div');
+                projectCard.className = 'project-card';
+                projectCard.innerHTML = `
+                    <div class="project-header">
+                        <h3>${project.name}</h3>
+                        <div class="progress-info">
+                            <span class="progress-percent">${project.progress}%</span>
+                            <span class="progress-label">Complete</span>
+                        </div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${project.progress}%"></div>
+                    </div>
+                    <p class="project-description">${project.description}</p>
+                    <div class="project-details">
+                        <div class="detail-item">
+                            <strong>Budget:</strong> <span class="budget">${project.budget}</span>
+                        </div>
+                        <div class="detail-item">
+                            <strong>Location:</strong> ${project.location}
+                        </div>
+                        <div class="detail-item">
+                            <strong>Expected Completion:</strong> ${new Date(project.expectedCompletion).toLocaleDateString()}
+                        </div>
+                    </div>
+                `;
+                container.appendChild(projectCard);
+            });
+        }
+
+        // Menu functionality
+        const menuBtn = document.getElementById('menuBtn');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
+
+        menuBtn.addEventListener('click', () => {
+            menuOverlay.style.display = 'flex';
+        });
+
+        closeMenuBtn.addEventListener('click', () => {
+            menuOverlay.style.display = 'none';
+        });
+
+        menuOverlay.addEventListener('click', (e) => {
+            if (e.target === menuOverlay) {
+                menuOverlay.style.display = 'none';
+            }
+        });
+
+        logoutBtn.addEventListener('click', () => {
+            localStorage.removeItem('isLoggedIn');
+            alert('Logged out successfully');
+            window.location.href = 'login.html';
+        });
+
+        // Load projects on page load
+        displayProjects();
+    </script>
+    <script>lucide.createIcons()</script>
+</body>
+</html>

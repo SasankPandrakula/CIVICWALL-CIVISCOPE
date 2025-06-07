@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Up-Coming Projects - CIVICWALL-CIVISCOPE</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="navbar">
+        <div class="nav-container">
+            <div class="nav-header">
+                <h1 class="nav-title">CIVICWALL-CIVISCOPE</h1>
+            </div>
+            
+            <div class="nav-content">
+                <div class="nav-links">
+                    <a href="home.html"><button class="nav-btn">Home</button></a>
+                    <a href="about.html"><button class="nav-btn">About</button></a>
+                    <a href="schemas.html"><button class="nav-btn">Schemas</button></a>
+                </div>
+                <div class="nav-actions">
+                    <div class="search-container">
+                        <i data-lucide="search" class="icon-outline"></i>
+                        <input type="text" id="searchInput" placeholder="Search location, problems..." class="search-input">
+                    </div>
+                   <button class="menu-btn" id="menuBtn"><i data-lucide="menu" class="icon-outline"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="menu-overlay" id="menuOverlay">
+        <div class="menu-content">
+            <div class="menu-header">
+                <h2>Menu</h2>
+                <button class="close-btn" id="closeMenuBtn"><i data-lucide="x" class="icon-outline"></i></button>
+            </div>
+            <div class="menu-items">
+                <a href="home.html"><button class="menu-item"><i data-lucide="home" class="icon-outline"></i> Home</button></a>
+                <a href="about.html"><button class="menu-item"><i data-lucide="info" class="icon-outline"></i> About</button></a>
+                <a href="schemas.html"><button class="menu-item"><i data-lucide="file-text" class="icon-outline"></i> Schemas</button></a>
+                <a href="ongoing.html"><button class="menu-item"><i data-lucide="refresh-ccw" class="icon-outline"></i> On-going</button></a>
+                <a href="upcoming.html"><button class="menu-item"><i data-lucide="calendar" class="icon-outline"></i> Up-coming</button></a>
+                <a href="id.html"><button class="menu-item"><i data-lucide="badge-check" class="icon-outline"></i> ID Importance</button></a>
+                <a href="funding.html"><button class="menu-item"><i data-lucide="wallet" class="icon-outline"></i> Funding</button></a>
+                <button class="menu-item logout" id="logoutBtn"><i data-lucide="log-out" class="icon-outline"></i> Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">Up-Coming Projects</h1>
+            <p class="page-subtitle">Future development initiatives under discussion and planning for Andhra Pradesh 2025-2030</p>
+        </div>
+
+        <div id="projectsContainer" class="upcoming-projects-container">
+            <!-- Projects will be loaded here -->
+        </div>
+    </div>
+
+    <script>
+        // Check if user is logged in
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'login.html';
+        }
+
+        const upcomingProjects = [
+            {
+                name: "Godavari-Krishna Inter-linking Project",
+                description: "Ambitious project to link Godavari and Krishna rivers to optimize water distribution across the state.",
+                estimatedBudget: "₹85,000 crores",
+                location: "East Godavari, West Godavari, Krishna Districts",
+                status: "Under Central Government Approval",
+                proposedStart: "2025-06-01"
+            },
+            {
+                name: "Andhra Pradesh Hyperloop Corridor",
+                description: "Ultra-high-speed transportation system connecting Visakhapatnam, Vijayawada, and Amaravati.",
+                estimatedBudget: "₹45,000 crores",
+                location: "Visakhapatnam-Vijayawada-Amaravati Corridor",
+                status: "Feasibility Study Phase",
+                proposedStart: "2026-01-01"
+            },
+            {
+                name: "Green Energy Industrial Hub",
+                description: "Establishment of Asia's largest renewable energy manufacturing hub focusing on solar panels and wind turbines.",
+                estimatedBudget: "₹25,000 crores",
+                location: "Anantapur District",
+                status: "Land Acquisition in Progress",
+                proposedStart: "2025-08-01"
+            }
+        ];
+
+        function getStatusColor(status) {
+            const statusColors = {
+                "Under Central Government Approval": "status-yellow",
+                "Feasibility Study Phase": "status-blue",
+                "Land Acquisition in Progress": "status-orange"
+            };
+            return statusColors[status] || "status-gray";
+        }
+
+        function displayProjects() {
+            const container = document.getElementById('projectsContainer');
+            container.innerHTML = '';
+
+            upcomingProjects.forEach(project => {
+                const projectCard = document.createElement('div');
+                projectCard.className = 'upcoming-project-card';
+                projectCard.innerHTML = `
+                    <div class="project-header">
+                        <h3>${project.name}</h3>
+                        <span class="project-status ${getStatusColor(project.status)}">${project.status}</span>
+                    </div>
+                    <p class="project-description">${project.description}</p>
+                    <div class="project-details">
+                        <div class="detail-row">
+                            <div class="detail-item">
+                                <strong>📅 Proposed Start:</strong> ${new Date(project.proposedStart).toLocaleDateString()}
+                            </div>
+                            <div class="detail-item">
+                                <strong>💰 Budget:</strong> <span class="budget">${project.estimatedBudget}</span>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <strong>📍 Location:</strong> ${project.location}
+                        </div>
+                    </div>
+                `;
+                container.appendChild(projectCard);
+            });
+        }
+
+        // Menu functionality
+        const menuBtn = document.getElementById('menuBtn');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
+
+        menuBtn.addEventListener('click', () => {
+            menuOverlay.style.display = 'flex';
+        });
+
+        closeMenuBtn.addEventListener('click', () => {
+            menuOverlay.style.display = 'none';
+        });
+
+        menuOverlay.addEventListener('click', (e) => {
+            if (e.target === menuOverlay) {
+                menuOverlay.style.display = 'none';
+            }
+        });
+
+        logoutBtn.addEventListener('click', () => {
+            localStorage.removeItem('isLoggedIn');
+            alert('Logged out successfully');
+            window.location.href = 'login.html';
+        });
+
+        // Load projects on page load
+        displayProjects();
+    </script>
+    <script>lucide.createIcons()</script>
+</body>
+</html>

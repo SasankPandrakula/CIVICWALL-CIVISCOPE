@@ -1,0 +1,298 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ID Importance - CIVICWALL-CIVISCOPE</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="navbar">
+        <div class="nav-container">
+            <div class="nav-header">
+                <h1 class="nav-title">CIVICWALL-CIVISCOPE</h1>
+            </div>
+            
+            <div class="nav-content">
+                <div class="nav-links">
+                    <a href="home.html"><button class="nav-btn">Home</button></a>
+                    <a href="about.html"><button class="nav-btn">About</button></a>
+                    <a href="schemas.html"><button class="nav-btn">Schemas</button></a>
+                </div>
+                <div class="nav-actions">
+                    <div class="search-container">
+                        <i data-lucide="search" class="icon-outline"></i>
+                        <input type="text" id="searchInput" placeholder="Search location, problems..." class="search-input">
+                    </div>
+                    <button class="menu-btn" id="menuBtn"><i data-lucide="menu" class="icon-outline"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="menu-overlay" id="menuOverlay">
+        <div class="menu-content">
+            <div class="menu-header">
+                <h2>Menu</h2>
+               <button class="close-btn" id="closeMenuBtn"><i data-lucide="x" class="icon-outline"></i></button>
+            </div>
+            <div class="menu-items">
+                <a href="home.html"><button class="menu-item"><i data-lucide="home" class="icon-outline"></i> Home</button></a>
+                <a href="about.html"><button class="menu-item"><i data-lucide="info" class="icon-outline"></i> About</button></a>
+                <a href="schemas.html"><button class="menu-item"><i data-lucide="file-text" class="icon-outline"></i> Schemas</button></a>
+                <a href="ongoing.html"><button class="menu-item"><i data-lucide="refresh-ccw" class="icon-outline"></i> On-going</button></a>
+                <a href="upcoming.html"><button class="menu-item"><i data-lucide="calendar" class="icon-outline"></i> Up-coming</button></a>
+                <a href="id.html"><button class="menu-item"><i data-lucide="badge-check" class="icon-outline"></i> ID Importance</button></a>
+                <a href="funding.html"><button class="menu-item"><i data-lucide="wallet" class="icon-outline"></i> Funding</button></a>
+                <button class="menu-item logout" id="logoutBtn"><i data-lucide="log-out" class="icon-outline"></i> Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">ID Importance & Demo</h1>
+            <p class="page-subtitle">Complete guide to important documents, their uses, and application process</p>
+        </div>
+
+        <div id="documentsContainer" class="documents-container">
+            <!-- Documents will be loaded here -->
+        </div>
+    </div>
+
+    <script>
+        // Check if user is logged in
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'login.html';
+        }
+
+        const documents = [
+        {
+            name: "Aadhar Card",
+            icon: "🆔",
+            importance: "Primary identity proof required for all government services, bank accounts, and verification processes.",
+            uses: [
+                "Identity verification for all government schemes",
+                "Bank account opening and KYC compliance",
+                "Digital payments and financial transactions",
+                "Passport and visa applications"
+            ],
+            requirements: [
+                "Proof of identity (birth certificate, passport, etc.)",
+                "Proof of address (utility bill, bank statement, etc.)",
+                "Biometric data (fingerprints, iris scan, photograph)"
+            ],
+            process: "Visit Aadhar enrollment center → Submit documents → Biometric capture → Receive acknowledgment → Download Aadhar online",
+            validity: "Lifetime"
+        },
+        {
+            name: "Birth Certificate",
+            icon: "👶",
+            importance: "Fundamental document proving date and place of birth, essential for citizenship and age verification.",
+            uses: [
+                "Aadhar card enrollment for minors",
+                "School admissions and age proof",
+                "Passport applications",
+                "Government job applications"
+            ],
+            requirements: [
+                "Hospital birth records or midwife certificate",
+                "Parents' identity documents",
+                "Address proof of birth place"
+            ],
+            process: "Apply to Registrar of Births → Submit required documents → Verification → Certificate issuance",
+            validity: "Lifetime"
+        },
+        {
+            name: "Caste Certificate",
+            icon: "👥",
+            importance: "Certification of caste status for availing reservations and special benefits in education and employment.",
+            uses: [
+                "Educational reservations and scholarships",
+                "Government job reservations",
+                "Special welfare schemes",
+                "Hostel admissions"
+            ],
+            requirements: [
+                "Caste certificate of parents/grandparents",
+                "Community verification documents",
+                "Residential proof",
+                "Identity documents"
+            ],
+            process: "Apply to Tahsildar/MRO → Document verification → Community verification → Certificate issuance",
+            validity: "Lifetime"
+        },
+        {
+            name: "Voter ID",
+            icon: "🗳️",
+            importance: "Enables participation in democratic process and serves as important identity and address proof.",
+            uses: [
+                "Voting in elections",
+                "Identity proof for various applications",
+                "Address verification",
+                "Bank account opening"
+            ],
+            requirements: [
+                "Age proof (18+ years)",
+                "Address proof documents",
+                "Identity documents",
+                "Recent photograph"
+            ],
+            process: "Apply online/offline to Election Commission → Document verification → Field verification → Card issuance",
+            validity: "Lifetime"
+        },
+        {
+            name: "PAN Card",
+            icon: "💳",
+            importance: "Essential for financial transactions, income tax filing, and linking with bank accounts.",
+            uses: [
+                "Filing income tax returns",
+                "Opening bank accounts",
+                "Large financial transactions",
+                "Linking with Aadhar for verification"
+            ],
+            requirements: [
+                "Proof of identity",
+                "Proof of address",
+                "Photograph"
+            ],
+            process: "Apply online via NSDL or UTIITSL → Submit documents → Pay fee → Receive PAN card by post",
+            validity: "Lifetime"
+        },
+        {
+            name: "Ration Card",
+            icon: "🍚",
+            importance: "Provides access to subsidized food and essential commodities under the Public Distribution System (PDS).",
+            uses: [
+                "Receiving subsidized rice, wheat, sugar, etc.",
+                "Proof of residence and identity",
+                "Beneficiary for welfare schemes",
+                "Linking with Aadhar for DBT (Direct Benefit Transfer)"
+            ],
+            requirements: [
+                "Proof of family income",
+                "Aadhar cards of family members",
+                "Address proof",
+                "Family photo"
+            ],
+            process: "Apply to civil supplies department → Submit documents → Verification → Issuance of ration card",
+            validity: "Conditional (subject to income/status)"
+        },
+        {
+            name: "LPG Gas Connection Card (Gas Card)",
+            icon: "⛽",
+            importance: "Provides access to subsidized LPG gas connections and refills, especially for low-income families.",
+            uses: [
+                "Subsidized LPG gas cylinders under Ujjwala Yojana",
+                "Proof for cooking gas connection",
+                "Address and identity verification"
+            ],
+            requirements: [
+                "Aadhar card",
+                "BPL certificate (for subsidy)",
+                "Bank account linked with Aadhar",
+                "Ration card"
+            ],
+            process: "Apply at LPG distributor or online → Submit documents → Verification → Gas connection issuance",
+            validity: "Ongoing (needs periodic refill and verification)"
+        },
+        {
+            name: "Ayushman Bharat Health Card",
+            icon: "🏥",
+            importance: "Provides cashless healthcare benefits up to ₹5 lakh per family per year for low-income citizens.",
+            uses: [
+                "Free treatment at empaneled hospitals",
+                "Covers medical and surgical expenses",
+                "Family health coverage"
+            ],
+            requirements: [
+                "Aadhar card",
+                "Ration card or BPL certificate",
+                "Mobile number"
+            ],
+            process: "Check eligibility online → Visit CSC center or apply online → Document verification → Card issuance",
+            validity: "Annual renewal"
+        }
+    ];
+    
+        function displayDocuments() {
+            const container = document.getElementById('documentsContainer');
+            container.innerHTML = '';
+
+            documents.forEach(doc => {
+                const docCard = document.createElement('div');
+                docCard.className = 'document-card';
+                docCard.innerHTML = `
+                    <div class="document-header">
+                        <div class="document-icon">${doc.icon}</div>
+                        <h3>${doc.name}</h3>
+                    </div>
+                    <p class="document-importance"><strong>Importance:</strong> ${doc.importance}</p>
+                    <div class="document-details">
+                        <div class="detail-section">
+                            <h4>Key Uses:</h4>
+                            <ul>
+                                ${doc.uses.map(use => `<li>${use}</li>`).join('')}
+                            </ul>
+                        </div>
+                        <div class="detail-section">
+                            <h4>Required Documents:</h4>
+                            <ul>
+                                ${doc.requirements.map(req => `<li>${req}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="process-section">
+                        <h4>Application Process:</h4>
+                        <p>${doc.process}</p>
+                    </div>
+                    <div class="document-footer">
+                        <span><strong>Validity:</strong> ${doc.validity}</span>
+                        <button class="demo-btn">View Demo Process</button>
+                    </div>
+                `;
+                container.appendChild(docCard);
+            });
+
+            // Add demo button functionality
+            document.querySelectorAll('.demo-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    alert('Demo process will be available soon!');
+                });
+            });
+        }
+
+        // Menu functionality
+        const menuBtn = document.getElementById('menuBtn');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
+
+        menuBtn.addEventListener('click', () => {
+            menuOverlay.style.display = 'flex';
+        });
+
+        closeMenuBtn.addEventListener('click', () => {
+            menuOverlay.style.display = 'none';
+        });
+
+        menuOverlay.addEventListener('click', (e) => {
+            if (e.target === menuOverlay) {
+                menuOverlay.style.display = 'none';
+            }
+        });
+
+        logoutBtn.addEventListener('click', () => {
+            localStorage.removeItem('isLoggedIn');
+            alert('Logged out successfully');
+            window.location.href = 'login.html';
+        });
+
+        // Load documents on page load
+        displayDocuments();
+    </script>
+    <script>lucide.createIcons()</script>
+</body>
+</html>

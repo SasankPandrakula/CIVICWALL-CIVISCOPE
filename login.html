@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - CIVICWALL-CIVISCOPE</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1 class="title">CIVICWALL-CIVISCOPE</h1>
+                <p class="subtitle" id="stepTitle">Enter your Aadhar number to login</p>
+            </div>
+            
+            <div id="aadharStep" class="auth-form">
+                <div class="form-group">
+                    <label for="aadharNumber">Aadhar Number *</label>
+                    <input type="text" id="aadharNumber" required maxlength="12" placeholder="Enter 12-digit Aadhar number">
+                </div>
+                <button type="button" id="sendOtpBtn" class="btn-primary">Send OTP</button>
+            </div>
+            
+            <div id="otpStep" class="auth-form" style="display: none;">
+                <div class="form-group">
+                    <label for="otp">Enter OTP *</label>
+                    <input type="text" id="otp" required maxlength="6" placeholder="Enter 6-digit OTP (use: 123456)">
+                    <p class="helper-text">OTP sent to mobile number linked with Aadhar: <span id="aadharDisplay"></span></p>
+                </div>
+                <button type="button" id="verifyOtpBtn" class="btn-primary">Verify & Login</button>
+                <button type="button" id="tryAnotherBtn" class="btn-secondary">Try Another Way</button>
+            </div>
+            
+            <div class="auth-footer">
+                <p>Don't have an account? <a href="signin.html">Sign up here</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const sendOtpBtn = document.getElementById('sendOtpBtn');
+        const verifyOtpBtn = document.getElementById('verifyOtpBtn');
+        const tryAnotherBtn = document.getElementById('tryAnotherBtn');
+        const aadharStep = document.getElementById('aadharStep');
+        const otpStep = document.getElementById('otpStep');
+        const stepTitle = document.getElementById('stepTitle');
+        
+        sendOtpBtn.addEventListener('click', function() {
+            const aadharNumber = document.getElementById('aadharNumber').value;
+            
+            if (aadharNumber.length !== 12) {
+                alert('Aadhar number must be 12 digits');
+                return;
+            }
+            
+            // Simulate sending OTP
+            sendOtpBtn.textContent = 'Sending OTP...';
+            setTimeout(() => {
+                aadharStep.style.display = 'none';
+                otpStep.style.display = 'block';
+                stepTitle.textContent = 'Enter OTP sent to your mobile';
+                document.getElementById('aadharDisplay').textContent = aadharNumber;
+                alert('OTP sent to your registered mobile number!');
+            }, 2000);
+        });
+        
+        verifyOtpBtn.addEventListener('click', function() {
+            const otp = document.getElementById('otp').value;
+            
+            if (otp === '123456') {
+                localStorage.setItem('isLoggedIn', 'true');
+                alert('Login successful!');
+                window.location.href = 'home.html';
+            } else {
+                alert('Invalid OTP. Please try again.');
+            }
+        });
+        
+        tryAnotherBtn.addEventListener('click', function() {
+            aadharStep.style.display = 'block';
+            otpStep.style.display = 'none';
+            stepTitle.textContent = 'Enter your Aadhar number to login';
+            document.getElementById('aadharNumber').value = '';
+            document.getElementById('otp').value = '';
+            sendOtpBtn.textContent = 'Send OTP';
+        });
+    </script>
+    <script>lucide.createIcons()</script>
+</body>
+</html>

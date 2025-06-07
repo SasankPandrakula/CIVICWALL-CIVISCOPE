@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - CIVICWALL-CIVISCOPE</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="navbar">
+        <div class="nav-container">
+            <div class="nav-header">
+                <h1 class="nav-title">CIVICWALL-CIVISCOPE</h1>
+            </div>
+            <div class="nav-content">
+                <div class="nav-links">
+                    <a href="home.html"><button class="nav-btn active">Home</button></a>
+                    <a href="about.html"><button class="nav-btn">About</button></a>
+                    <a href="schemas.html"><button class="nav-btn">Schemas</button></a>
+                </div>
+                <div class="nav-actions">
+                    <div class="search-container">
+                        <i data-lucide="search" class="icon-outline"></i>
+                        <input type="text" id="searchInput" placeholder="Search location, problems..." class="search-input">
+                    </div>
+                    <button class="menu-btn" id="menuBtn"><i data-lucide="menu" class="icon-outline"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="menu-overlay" id="menuOverlay">
+        <div class="menu-content">
+            <div class="menu-header">
+                <h2>Menu</h2>
+                <button class="close-btn" id="closeMenuBtn"><i data-lucide="x" class="icon-outline"></i></button>
+            </div>
+            <div class="menu-items">
+                <a href="home.html"><button class="menu-item"><i data-lucide="home" class="icon-outline"></i> Home</button></a>
+                <a href="about.html"><button class="menu-item"><i data-lucide="info" class="icon-outline"></i> About</button></a>
+                <a href="schemas.html"><button class="menu-item"><i data-lucide="file-text" class="icon-outline"></i> Schemas</button></a>
+                <a href="ongoing.html"><button class="menu-item"><i data-lucide="refresh-ccw" class="icon-outline"></i> On-going</button></a>
+                <a href="upcoming.html"><button class="menu-item"><i data-lucide="calendar" class="icon-outline"></i> Up-coming</button></a>
+                <a href="id.html"><button class="menu-item"><i data-lucide="badge-check" class="icon-outline"></i> ID Importance</button></a>
+                <a href="funding.html"><button class="menu-item"><i data-lucide="wallet" class="icon-outline"></i> Funding</button></a>
+                <button class="menu-item logout" id="logoutBtn"><i data-lucide="log-out" class="icon-outline"></i> Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="welcome-banner">
+            <h2>Welcome to Civicwall - Civiscope</h2>
+            <p>Your voice matters! Report civic issues, track government projects, and engage with your community. Together, we build a better Andhra Pradesh.</p>
+        </div>
+
+        <div class="upload-section">
+            <button class="upload-btn" id="uploadBtn"><i data-lucide="upload" class="icon-outline"></i> Upload Civic Issue</button>
+        </div>
+
+        <div class="posts-section">
+            <h3>Latest Civic Updates</h3>
+            <div id="postsContainer">
+                <!-- Posts will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="uploadModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Upload Civic Issue</h3>
+                <button class="close-btn" id="closeModalBtn"><i data-lucide="x" class="icon-outline"></i></button>
+            </div>
+            <form id="uploadForm" class="upload-form">
+                <div class="form-group">
+                    <label for="issueTitle">Title of Issue *</label>
+                    <input type="text" id="issueTitle" required placeholder="Brief title of the civic issue">
+                </div>
+                <div class="form-group">
+                    <label for="issueNote">Note about Issue *</label>
+                    <textarea id="issueNote" required placeholder="Detailed description of the issue"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="issueLocation">Location *</label>
+                    <input type="text" id="issueLocation" required placeholder="Location where the issue exists">
+                </div>
+                <div class="form-group">
+                    <label for="issueFiles">Upload Photos/Videos</label>
+                    <input type="file" id="issueFiles" accept="image/*,video/*" multiple>
+                </div>
+                <button type="submit" class="btn-primary">Submit Issue</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'login.html';
+        }
+
+        const menuBtn = document.getElementById('menuBtn');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
+
+        menuBtn.addEventListener('click', () => {
+            menuOverlay.style.display = 'flex';
+        });
+
+        closeMenuBtn.addEventListener('click', () => {
+            menuOverlay.style.display = 'none';
+        });
+
+        menuOverlay.addEventListener('click', (e) => {
+            if (e.target === menuOverlay) {
+                menuOverlay.style.display = 'none';
+            }
+        });
+
+        logoutBtn.addEventListener('click', () => {
+            localStorage.removeItem('isLoggedIn');
+            alert('Logged out successfully');
+            window.location.href = 'login.html';
+        });
+
+        const uploadBtn = document.getElementById('uploadBtn');
+        const uploadModal = document.getElementById('uploadModal');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const uploadForm = document.getElementById('uploadForm');
+
+        uploadBtn.addEventListener('click', () => {
+            uploadModal.style.display = 'flex';
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+            uploadModal.style.display = 'none';
+        });
+
+        uploadModal.addEventListener('click', (e) => {
+            if (e.target === uploadModal) {
+                uploadModal.style.display = 'none';
+            }
+        });
+
+        uploadForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const title = document.getElementById('issueTitle').value;
+            const note = document.getElementById('issueNote').value;
+            const location = document.getElementById('issueLocation').value;
+            const files = document.getElementById('issueFiles').files;
+
+            const post = {
+                id: Date.now(),
+                title: title,
+                note: note,
+                location: location,
+                timestamp: 'Just now',
+                author: JSON.parse(localStorage.getItem('userData') || '{}').name || 'Anonymous',
+                views: 0,
+                shares: 0,
+                comments: []
+            };
+
+            let posts = JSON.parse(localStorage.getItem('posts') || '[]');
+            posts.unshift(post);
+            localStorage.setItem('posts', JSON.stringify(posts));
+
+            alert('Issue uploaded successfully!');
+            uploadModal.style.display = 'none';
+            uploadForm.reset();
+            loadPosts();
+        });
+
+        function loadPosts() {
+            const postsContainer = document.getElementById('postsContainer');
+            const posts = JSON.parse(localStorage.getItem('posts') || '[]');
+
+            if (posts.length === 0) {
+                const defaultPosts = [
+                    {
+                        id: 1,
+                        title: 'Road Potholes Issue',
+                        note: 'Urgent: Main road in Vijayawada near Krishna River bridge has multiple potholes causing traffic accidents. The condition has worsened after recent rains.',
+                        location: 'Vijayawada, Krishna District',
+                        timestamp: '2 hours ago',
+                        author: 'Ramesh Kumar',
+                        views: 245,
+                        shares: 12,
+                        comments: [
+                            {
+                                author: 'Municipal Commissioner',
+                                text: 'Thank you for reporting this issue. Our road maintenance team has been notified.',
+                                timestamp: '1 hour ago'
+                            }
+                        ]
+                    }
+                ];
+                localStorage.setItem('posts', JSON.stringify(defaultPosts));
+            }
+
+            const allPosts = JSON.parse(localStorage.getItem('posts') || '[]');
+            postsContainer.innerHTML = '';
+
+            allPosts.forEach(post => {
+                const postDiv = document.createElement('div');
+                postDiv.className = 'post-card';
+                postDiv.innerHTML = `
+                    <div class="post-header">
+                        <div class="post-author">
+                            <strong>${post.author}</strong>
+                            <span class="post-type">citizen</span>
+                        </div>
+                        <span class="post-time">${post.timestamp}</span>
+                    </div>
+                    <div class="post-content">
+                        <h4>${post.title || ''}</h4>
+                        <p>${post.note}</p>
+                        <div class="post-location"><i data-lucide="map-pin" class="icon-outline"></i> ${post.location}</div>
+                    </div>
+                    <div class="post-actions">
+                        <button class="action-btn"><i data-lucide="eye" class="icon-outline"></i> ${post.views}</button>
+                        <button class="action-btn"><i data-lucide="share-2" class="icon-outline"></i> ${post.shares}</button>
+                        <button class="action-btn"><i data-lucide="message-circle" class="icon-outline"></i> ${post.comments.length}</button>
+                    </div>
+                `;
+                postsContainer.appendChild(postDiv);
+            });
+        }
+
+        loadPosts();
+        lucide.createIcons();
+    </script>
+</body>
+</html>
